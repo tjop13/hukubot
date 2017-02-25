@@ -83,33 +83,43 @@ class Parser(HTMLParser): # htmLParserを継承したクラスを定義する
         if tag == 'p' and parameter_flag==4:
           parameter_flag=3
 
-def GetParameter(num):
-    driver = webdriver.PhantomJS()
+#def GetParameter(num):
+#    driver = webdriver.PhantomJS()
 
-    driver.get("http://wear.jp"+path)
-    source = driver.page_source
-    driver.close()
+#    driver.get("http://wear.jp"+path)
+#    source = driver.page_source
+#    driver.close()
 
-    return source
+#    response = urllib2.urlopen("http://wear.jp"+path)
+#    source = response.read()
+#    print source
+
+#    return source
 
 if __name__ == "__main__":
+
+    f_out = open('data.txt', 'a')
+    driver = webdriver.PhantomJS()
     f = open('code.txt', 'r')
+    parser = Parser()        # パーサオブジェクトの生成
+
     for path in f:
         print path
-        parser = Parser()        # パーサオブジェクトの生成
-        parser.feed(GetParameter(path)) # パーサにHTMLを入力する
-        parser.close()
+        driver.get("http://wear.jp"+path)
+        source = driver.page_source
+        parser.feed(source) # パーサにHTMLを入力する
+        for data in parameters:
+          result = data + '\n'
+          f_out.write(result.encode('utf-8'))
+        parameters = [];        
         time.sleep(1)
+
     f.close()
+    f_out.close()
+    driver.close()
+    parser.close()
 
     print parameters
 
-    result = ""
-    for data in parameters:
-        result += data + '\n'
-
-    f = open('data.txt', 'w')
-    f.write(result.encode('utf-8'))
-    f.close()
 
     print "fin"
