@@ -99,7 +99,7 @@ if __name__ == "__main__":
         parser = Parser()        # パーサオブジェクトの生成
         parser.feed(GetParameter(path)) # パーサにHTMLを入力する
         parser.close()
-        time.sleep(5)
+        time.sleep(1)
     f.close()
 
     print parameters

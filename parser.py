@@ -37,14 +37,14 @@ class Parser(HTMLParser): # htmLParserを継承したクラスを定義する
 def GetParameter(num):
     driver = webdriver.PhantomJS()
 
-    driver.get("http://wear.jp/coordinate/?pageno="+num)
+    driver.get("http://wear.jp/women-coordinate/?pageno="+num)
     source = driver.page_source
     driver.close()
 
     return source
 
 if __name__ == "__main__":
-    for i in range(1,333):
+    for i in range(1,334):
         print "No."+str(i)
         parser = Parser()        # パーサオブジェクトの生成
         parser.feed(GetParameter(str(i))) # パーサにHTMLを入力する
